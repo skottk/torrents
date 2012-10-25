@@ -28,9 +28,45 @@
          titles
          )))
 
-(map #(mapcat :content %1)
-     (map #(drop 5 ( :content %1))
-          (butlast (rest (html/select nodes  #{[:table#searchResult :tr ]} )))))
+(defn nth-indexed [idxs s]
+  (map #(get %1 s)idxs ))
 
-(defn get-indexed [s idxs]
-  (mapcat #(get %1 s)idxs ))
+
+(defn get-indexed-tags [ row tag idxs]
+  (map #(get-col-by-tag row tag %)
+       idxs))
+
+
+
+
+(def columns {
+             ; :work [ 2 :a]
+              :seeders [ 5 :content]
+              :leechers [ 7 :content] })
+
+(defn get-col-by-tag [row  tag idx]
+  (tag (nth row idx)))
+
+(defn get-tagged-cols [ row cols]
+  (merge (map #(assoc {}
+                  (key %)
+                  (get-col-by-tag row
+                                  (second (val %))
+                                  (first (val %))) )
+               cols)))
+
+
+(defn get-keyed-tags [row tag idxs]
+  (map #( tag ( nth row %))  idxs))
+
+(defn get-tpb-rows [nodes]
+  (butlast (rest (html/select nodes  #{[:table#searchResult :tr ]} ))))
+
+(pprint
+ (map
+  #( get-tagged-cols % columns)
+  (get-tpb-rows nodes)))
+
+(pprint  (map
+          #( get-tagged-cols % columns)
+          (get-tpb-rows nodes)))
