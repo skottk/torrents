@@ -5,9 +5,10 @@
                   :exclusions [org.clojure/clojure
                                clj-stacktrace]]
                  [net.cgrand/moustache "1.1.0"]
-                 [lobos "1.0.3-SNAPSHOT`"]
+                 [lobos "0.8.0"]
                  [lein-jdk-tools "0.1.0"]
                  [korma "0.2.1"]
+                 [clj-time "0.4.4"]
                  [enlive "1.0.0"]
                  [postgresql "9.1-901.jdbc4"]
                  [clj-yaml "0.3.1"]]

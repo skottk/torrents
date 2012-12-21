@@ -45,7 +45,7 @@
 (defmigration add-torrents-table
   (up [] (create torrentdb
            (tbl :torrents (integer :id :primary-key :auto-inc)
-                  (timestamp :sample-date )
+                  (timestamp :sampledate )
                   (varchar :title 100 :unique )
                   (bigint :seeders  :not-null )
                   (bigint :leechers  :not-null))))
@@ -63,3 +63,7 @@
             (varchar :name 100 :unique)
             (check :name (> (length :name) 1)))))
   (down [] (drop (table :users))))
+
+
+(defmigration add-size-to-torrents
+  (up [] (alter :add (tbl :torrents (varchar :size 100)))))
